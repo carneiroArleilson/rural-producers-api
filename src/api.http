@@ -1,0 +1,93 @@
+### PRODUCER
+### Criar produtor
+POST http://localhost:3000/producer
+Content-Type: application/json
+
+{
+  "cpfCnpj": "70071177248",
+  "name": "larissa"
+}
+
+### Listar todos os produtores
+GET http://localhost:3000/producer
+
+### Consultar produtor
+GET http://localhost:3000/producer/31a97570-a3e7-4ddb-8d26-0ec2954cd071
+
+### Atualizar produtor
+PATCH http://localhost:3000/producer/31a97570-a3e7-4ddb-8d26-0ec2954cd071
+Content-Type: application/json
+
+{
+  "cpfCnpj": "03309392201",
+  "name": "Arleilson Atualizada"
+}
+
+### Remover produtor
+DELETE http://localhost:3000/producer/37efd8d9-9055-4fc9-a530-82c138b582a7
+
+
+### PROPERTY
+### Criar propriedade
+POST http://localhost:3000/property
+Content-Type: application/json
+
+{
+  "name": "Fazenda Santa Helena",
+  "city": "Xapuri",
+  "state": "AC",
+  "totalArea": 100,
+  "agriculturalArea": 60,
+  "vegetationArea": 40,
+  "producerId": "31a97570-a3e7-4ddb-8d26-0ec2954cd071"
+}
+
+### Listar todas as propriedades
+GET http://localhost:3000/property
+
+### Consultar propriedade
+GET http://localhost:3000/property/d6e9c951-5047-4e66-b2f4-187996df2163
+
+### Atualizar propriedade
+PATCH http://localhost:3000/property/d6e9c951-5047-4e66-b2f4-187996df2163
+Content-Type: application/json
+
+{
+  "name": "Fazenda Nova Esperança",
+  "totalArea": 120,
+  "agriculturalArea": 70,
+  "vegetationArea": 50
+}
+
+### Remover propriedade
+DELETE http://localhost:3000/property/d6e9c951-5047-4e66-b2f4-187996df2163
+
+
+### CROP
+### Criar cultura
+POST http://localhost:3000/crops
+Content-Type: application/json
+
+{
+  "name": "Soja",
+  "season": "2024/2025",
+  "propertyId": "d6e9c951-5047-4e66-b2f4-187996df2163"
+}
+
+### Listar todas as culturas
+GET http://localhost:3000/crops
+
+### Consultar cultura por ID
+GET http://localhost:3000/crops/REPLACE_WITH_CROP_ID
+
+### Atualizar cultura
+PATCH http://localhost:3000/crops/REPLACE_WITH_CROP_ID
+Content-Type: application/json
+
+{
+  "name": "Milho",
+  "season": "2025/2026"
+}
+
+### Remover cultura
+DELETE http://localhost:3000/crops/REPLACE_WITH_CROP_ID
