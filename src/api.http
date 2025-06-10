@@ -4,7 +4,7 @@ POST http://localhost:3000/producer
 Content-Type: application/json
 
 {
-  "cpfCnpj": "70071177248",
+  "cpfCnpj": "39053344705",
   "name": "larissa"
 }
 
@@ -19,7 +19,7 @@ PATCH http://localhost:3000/producer/31a97570-a3e7-4ddb-8d26-0ec2954cd071
 Content-Type: application/json
 
 {
-  "cpfCnpj": "03309392201",
+  "cpfCnpj": "36151760000143",
   "name": "Arleilson Atualizada"
 }
 
@@ -39,7 +39,7 @@ Content-Type: application/json
   "totalArea": 100,
   "agriculturalArea": 60,
   "vegetationArea": 40,
-  "producerId": "31a97570-a3e7-4ddb-8d26-0ec2954cd071"
+  "producerId": "5d04195c-6241-4a17-a555-8194af0b01bb"
 }
 
 ### Listar todas as propriedades
@@ -71,17 +71,17 @@ Content-Type: application/json
 {
   "name": "Soja",
   "season": "2024/2025",
-  "propertyId": "d6e9c951-5047-4e66-b2f4-187996df2163"
+  "propertyId": "7dc52ca9-4466-4ee7-b041-62cb2211ab3b"
 }
 
 ### Listar todas as culturas
 GET http://localhost:3000/crops
 
 ### Consultar cultura por ID
-GET http://localhost:3000/crops/REPLACE_WITH_CROP_ID
+GET http://localhost:3000/crops/7ba4bbc8-614e-4bfe-91ee-e5cc1c01b2ec
 
 ### Atualizar cultura
-PATCH http://localhost:3000/crops/REPLACE_WITH_CROP_ID
+PATCH http://localhost:3000/crops/7ba4bbc8-614e-4bfe-91ee-e5cc1c01b2ec
 Content-Type: application/json
 
 {
@@ -90,4 +90,4 @@ Content-Type: application/json
 }
 
 ### Remover cultura
-DELETE http://localhost:3000/crops/REPLACE_WITH_CROP_ID
+DELETE http://localhost:3000/crops/7ba4bbc8-614e-4bfe-91ee-e5cc1c01b2ec

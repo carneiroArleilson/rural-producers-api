@@ -1,36 +1,65 @@
+import {
+  Injectable,
+  NotFoundException,
+  BadRequestException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Injectable } from '@nestjs/common';
+import { Repository } from 'typeorm';
+import { Crop } from './entities/crop.entity';
+import { Property } from '../property/entities/property.entity';
 import { CreateCropDto } from './dto/create-crop.dto';
 import { UpdateCropDto } from './dto/update-crop.dto';
-import { Crop } from './entities/crop.entity';
-import { Repository } from 'typeorm';
 
 @Injectable()
 export class CropService {
   constructor(
     @InjectRepository(Crop)
-    private cropRepo: Repository<Crop>,
+    private readonly cropRepository: Repository<Crop>,
+
+    @InjectRepository(Property)
+    private readonly propertyRepository: Repository<Property>,
   ) {}
 
-  create(dto: CreateCropDto) {
-    const crop = this.cropRepo.create(dto);
-    return this.cropRepo.save(crop);
+  async create(dto: CreateCropDto): Promise<Crop> {
+    const property = await this.propertyRepository.findOneBy({ id: dto.propertyId });
+
+    if (!property) {
+      throw new NotFoundException(`Propriedade com ID ${dto.propertyId} não encontrada`);
+    }
+
+    const crop = this.cropRepository.create({ ...dto, property });
+    return this.cropRepository.save(crop);
   }
 
-  findAll() {
-    return this.cropRepo.find({ relations: ['property'] });
+  async findAll(): Promise<Crop[]> {
+    return this.cropRepository.find({
+      relations: ['property'],
+    });
   }
 
-  findOne(id: string) {
-    return this.cropRepo.findOne({ where: { id }, relations: ['property'] });
+  async findOne(id: string): Promise<Crop> {
+    const crop = await this.cropRepository.findOne({
+      where: { id },
+      relations: ['property'],
+    });
+
+    if (!crop) {
+      throw new NotFoundException(`Cultura com ID ${id} não encontrada`);
+    }
+
+    return crop;
   }
 
-  update(id: string, dto: UpdateCropDto) {
-    return this.cropRepo.update(id, dto);
+  async update(id: string, dto: UpdateCropDto): Promise<Crop> {
+    const crop = await this.findOne(id);
+    Object.assign(crop, dto);
+    return this.cropRepository.save(crop);
   }
 
-  remove(id: string) {
-    return this.cropRepo.delete(id);
+  async remove(id: string): Promise<void> {
+    const result = await this.cropRepository.delete(id);
+    if (result.affected === 0) {
+      throw new NotFoundException(`Cultura com ID ${id} não encontrada`);
+    }
   }
 }
-

@@ -27,6 +27,7 @@ describe('PropertyService', () => {
     agriculturalArea: 60,
     vegetationArea: 40,
     producer: fakeProducer,
+    crops: [],
   };
 
   beforeEach(async () => {
@@ -75,6 +76,7 @@ describe('PropertyService', () => {
       id: 'uuid-property',
       ...dto,
       producer: fakeProducer,
+      crops: []
     } as Property);
     propertyRepo.save.mockResolvedValue(fakeProperty);
 
