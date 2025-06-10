@@ -103,27 +103,4 @@ POST /crops
 🌾 Número de culturas por propriedade
 
 🧪 Testes
-Os testes são escritos com Jest e cobrem as principais operações da aplicação:
-
-bash
-Copiar
-Editar
-yarn test
-🛠️ Melhorias Futuras
- Autenticação com JWT
-
- Upload de arquivos (ex: documentos da propriedade)
-
- Integração com mapas geográficos
-
- Dashboard com gráficos em tempo real
-
-Desenvolvido com 💚 para tornar a gestão rural mais eficiente e digital.
-
-yaml
-Copiar
-Editar
-
----
-
-Se quiser que eu inclua **badges do GitHub Actions**, **cobertura com Codecov**, ou instruções para **deploy no Heroku ou Vercel**, é só pedir!
+Os testes são escritos com Jest e cobrem as principais operações da aplicação
