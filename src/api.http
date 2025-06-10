@@ -15,11 +15,11 @@ GET http://localhost:3000/producer
 GET http://localhost:3000/producer/31a97570-a3e7-4ddb-8d26-0ec2954cd071
 
 ### Atualizar produtor
-PATCH http://localhost:3000/producer/31a97570-a3e7-4ddb-8d26-0ec2954cd071
+PATCH http://localhost:3000/producer/5d04195c-6241-4a17-a555-8194af0b01bb
 Content-Type: application/json
 
 {
-  "cpfCnpj": "36151760000143",
+  "cpfCnpj": "12345678000195",
   "name": "Arleilson Atualizada"
 }
 
