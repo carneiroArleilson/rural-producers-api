@@ -6,15 +6,15 @@ export class Crop {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column()
+  @Column({nullable: false})
   name: string;
 
-  @Column()
-  season: string; // ex: "2024/2025"
+  @Column({nullable: false})
+  season: string;
 
   @ManyToOne(() => Property, (property) => property.crops, { onDelete: 'CASCADE' })
   property: Property;
 
-  @Column()
+  @Column({nullable: false})
   propertyId: string;
 }

@@ -12,7 +12,7 @@ API para gestão de propriedades rurais com cadastro de produtores, propriedades
 - **Jest** — Testes automatizados
 
 ## 📁 Estrutura de Pastas
-
+```bash
 src/
 ├── crop/ # Módulo de culturas
 ├── property/ # Módulo de propriedades
@@ -20,10 +20,7 @@ src/
 ├── common/ # Filtros, interceptors e utilidades
 ├── infra/ # Conexões com banco de dados
 └── main.ts # Arquivo principal da aplicação
-
-bash
-Copiar
-Editar
+```
 
 ## 🔧 Instalação e Execução
 
@@ -50,3 +47,4 @@ yarn start:dev
 
 # Rode os testes
 yarn test
+```

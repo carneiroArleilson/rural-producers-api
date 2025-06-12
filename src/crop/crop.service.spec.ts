@@ -16,7 +16,7 @@ describe('CropService', () => {
     id: 'prod-uuid',
     name: 'João',
     cpfCnpj: '12345678900',
-    properties: [], // Adicionado para satisfazer a tipagem
+    properties: [],
   };
 
   const mockProperty: Property = {

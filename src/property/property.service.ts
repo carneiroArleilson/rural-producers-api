@@ -2,86 +2,140 @@ import {
   Injectable,
   NotFoundException,
   BadRequestException,
+  InternalServerErrorException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Property } from './entities/property.entity';
-import { Repository } from 'typeorm';
 import { CreatePropertyDto } from './dto/create-property.dto';
 import { UpdatePropertyDto } from './dto/update-property.dto';
+import { Property } from './entities/property.entity';
 import { Producer } from 'src/producer/entities/producer.entity';
+import { Repository } from 'typeorm';
+import {
+  ARABLE_FARM_AREA_AND_VEGETATION_FARM_AREA_SHOULD_FIT_TOTAL_FARM_AREA,
+  PRODUCER_NOT_FIND,
+  PROPERTY_FIND_FAILED,
+  PROPERTY_NOT_CREATE,
+  PROPERTY_NOT_FIND,
+  PROPERTY_REMOVE_FAILED,
+  PROPERTY_UPDATE_FAILED,
+} from 'src/utils/erros';
+import { PropertyRepository } from './property.repository';
 
 @Injectable()
 export class PropertyService {
   constructor(
-    @InjectRepository(Property)
-    private readonly propertyRepository: Repository<Property>,
+    private readonly propertyRepository: PropertyRepository,
 
     @InjectRepository(Producer)
     private readonly producerRepository: Repository<Producer>,
   ) {}
 
   async create(dto: CreatePropertyDto): Promise<Property> {
-    const producer = await this.producerRepository.findOneBy({
-      id: dto.producerId,
-    });
+    try {
+      const { totalArea, agriculturalArea, vegetationArea } = dto;
 
-    if (!producer) {
-      throw new NotFoundException(`Produtor com ID ${dto.producerId} não encontrado`);
+      if (agriculturalArea + vegetationArea > totalArea) {
+        throw new BadRequestException(
+          ARABLE_FARM_AREA_AND_VEGETATION_FARM_AREA_SHOULD_FIT_TOTAL_FARM_AREA,
+        );
+      }
+
+      const producer = await this.producerRepository.findOneBy({
+        id: dto.producerId,
+      });
+
+      if (!producer) {
+        throw new NotFoundException(PRODUCER_NOT_FIND);
+      }
+
+      return this.propertyRepository.createAndSave(dto, producer);
+    } catch (error) {
+      if (
+        error instanceof BadRequestException ||
+        error instanceof NotFoundException
+      ) {
+        throw error;
+      }
+      throw new InternalServerErrorException(PROPERTY_NOT_CREATE);
     }
-
-    const total = dto.totalArea;
-    const somaAreas = dto.agriculturalArea + dto.vegetationArea;
-
-    if (somaAreas > total) {
-      throw new BadRequestException(
-        'A soma das áreas agrícola e de vegetação não pode ultrapassar a área total',
-      );
-    }
-
-    const property = this.propertyRepository.create({ ...dto, producer });
-    return this.propertyRepository.save(property);
   }
 
   async findAll(): Promise<Property[]> {
-    return this.propertyRepository.find({
-      relations: ['producer'],
-    });
+    try {
+      return await this.propertyRepository.findWithProducer();
+    } catch (error) {
+      throw new InternalServerErrorException(PROPERTY_FIND_FAILED);
+    }
   }
 
   async findOne(id: string): Promise<Property> {
-    const property = await this.propertyRepository.findOne({
-      where: { id },
-      relations: ['producer'],
-    });
+    try {
+      const property = await this.propertyRepository.findByIdWithProducer(id);
 
-    if (!property) {
-      throw new NotFoundException(`Propriedade com ID ${id} não encontrada`);
+      if (!property) {
+        throw new NotFoundException(PROPERTY_NOT_FIND);
+      }
+
+      return property;
+    } catch (error) {
+      if (error instanceof NotFoundException) {
+        throw error;
+      }
+      throw new InternalServerErrorException(PROPERTY_FIND_FAILED);
     }
-
-    return property;
   }
 
-  async update(id: string, dto: UpdatePropertyDto): Promise<Property> {
-    const property = await this.findOne(id);
+  async update(id: string, dto: UpdatePropertyDto): Promise<Property | null> {
+    try {
+      const property = await this.findOne(id);
 
-    const newTotal = dto.totalArea ?? property.totalArea;
-    const newAgri = dto.agriculturalArea ?? property.agriculturalArea;
-    const newVeg = dto.vegetationArea ?? property.vegetationArea;
+      const newTotal = dto.totalArea ?? property.totalArea;
+      const newAgri = dto.agriculturalArea ?? property.agriculturalArea;
+      const newVeg = dto.vegetationArea ?? property.vegetationArea;
 
-    if (newAgri + newVeg > newTotal) {
-      throw new BadRequestException(
-        'A soma das áreas agrícola e de vegetação não pode ultrapassar a área total',
-      );
+      if (
+        dto.totalArea !== undefined &&
+        dto.agriculturalArea !== undefined &&
+        dto.vegetationArea !== undefined &&
+        dto.agriculturalArea + dto.vegetationArea > dto.totalArea
+      ) {
+        throw new BadRequestException(
+          ARABLE_FARM_AREA_AND_VEGETATION_FARM_AREA_SHOULD_FIT_TOTAL_FARM_AREA,
+        );
+      }
+
+      if (newAgri + newVeg > newTotal) {
+        throw new BadRequestException(
+          ARABLE_FARM_AREA_AND_VEGETATION_FARM_AREA_SHOULD_FIT_TOTAL_FARM_AREA,
+        );
+      }
+
+      return await this.propertyRepository.updateById(id, dto);
+    } catch (error) {
+      if (
+        error instanceof BadRequestException ||
+        error instanceof NotFoundException
+      ) {
+        throw error;
+      }
+      throw new InternalServerErrorException(PROPERTY_UPDATE_FAILED);
     }
-
-    Object.assign(property, dto);
-    return this.propertyRepository.save(property);
   }
 
   async remove(id: string): Promise<void> {
-    const result = await this.propertyRepository.delete(id);
-    if (result.affected === 0) {
-      throw new NotFoundException(`Propriedade com ID ${id} não encontrada`);
+    try {
+      const property = await this.findOne(id);
+
+      if (!property) {
+        throw new NotFoundException(PROPERTY_NOT_FIND);
+      }
+
+      await this.propertyRepository.removeById(property);
+    } catch (error) {
+      if (error instanceof NotFoundException) {
+        throw error;
+      }
+      throw new InternalServerErrorException(PROPERTY_REMOVE_FAILED);
     }
   }
 }

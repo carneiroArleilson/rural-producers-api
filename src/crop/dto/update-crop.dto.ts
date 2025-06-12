@@ -1,4 +1,16 @@
-import { PartialType } from '@nestjs/mapped-types';
-import { CreateCropDto } from './create-crop.dto';
+import { IsOptional, IsString } from 'class-validator';
 
-export class UpdateCropDto extends PartialType(CreateCropDto) {}
+export class UpdateCropDto {
+
+  @IsString()
+  @IsOptional()
+  name?: string;
+  
+  @IsString()
+  @IsOptional()
+  season?: string;
+  
+  @IsString()
+  @IsOptional()
+  propertyId?: string;
+}

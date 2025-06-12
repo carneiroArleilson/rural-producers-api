@@ -16,13 +16,13 @@ export class Property {
   @Column()
   state: string;
 
-  @Column('float')
+  @Column({type: 'float', nullable: false})
   totalArea: number;
 
-  @Column('float')
+  @Column({type: 'float', nullable: false})
   agriculturalArea: number;
 
-  @Column('float')
+  @Column({type: 'float', nullable: false})
   vegetationArea: number;
 
   @ManyToOne(() => Producer, (producer) => producer.properties, { onDelete: 'CASCADE' })

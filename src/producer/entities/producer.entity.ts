@@ -6,13 +6,12 @@ export class Producer {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column({ unique: true })
+  @Column({ unique: true, nullable: false })
   cpfCnpj: string;
 
-  @Column()
+  @Column({ nullable: false})
   name: string;
 
-  // Quando formos criar as fazendas (farms), ativamos isso:
   @OneToMany(() => Property, (property) => property.producer)
   properties: Property[];
 
