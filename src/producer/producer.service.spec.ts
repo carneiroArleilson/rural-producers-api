@@ -1,5 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { ProducerService } from './producer.service';
+import { ProducerService } from './service/create-producer.service';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { Producer } from './entities/producer.entity';
 import { Repository } from 'typeorm';

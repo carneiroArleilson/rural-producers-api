@@ -11,7 +11,6 @@ import { cpf, cnpj } from 'cpf-cnpj-validator';
 export class IsCpfCnpjConstraint implements ValidatorConstraintInterface {
   validate(value: string, args?: ValidationArguments): boolean {
     if (!value) return false;
-    // Valida CPF ou CNPJ
     return cpf.isValid(value) || cnpj.isValid(value);
   }
 
@@ -20,7 +19,6 @@ export class IsCpfCnpjConstraint implements ValidatorConstraintInterface {
   }
 }
 
-// Decorator que você usa no DTO
 export function IsCpfCnpj(validationOptions?: ValidationOptions) {
   return function (object: Object, propertyName: string) {
     registerDecorator({

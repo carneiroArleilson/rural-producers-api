@@ -35,6 +35,7 @@ src/
 # Clone o repositório
 git clone https://github.com/carneiroArleilson/rural-producers-api.git
 cd rural-producers-api
+cp .example.env .env
 
 # Suba a infraestrutura com Docker
 docker-compose up -d

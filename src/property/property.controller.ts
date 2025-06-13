@@ -6,29 +6,38 @@ import {
   Patch,
   Param,
   Delete,
-  BadRequestException,
 } from '@nestjs/common';
-import { PropertyService } from './property.service';
 import { CreatePropertyDto } from './dto/create-property.dto';
 import { UpdatePropertyDto } from './dto/update-property.dto';
+import { CreatePropertyService } from './service/create-property.service';
+import { FindAllPropertyService } from './service/find-all-property.service';
+import { FindOnePropertyService } from './service/find-one-property.service';
+import { UpdatePropertyService } from './service/update-property.service';
+import { RemovePropertyService } from './service/remove-property.service';
 
 @Controller('property')
 export class PropertyController {
-  constructor(private readonly propertyService: PropertyService) {}
+  constructor(
+    private readonly createPropertyService: CreatePropertyService,
+    private readonly findAllPropertyService: FindAllPropertyService,
+    private readonly findOnePropertyService: FindOnePropertyService,
+    private readonly updatePropertyService: UpdatePropertyService,
+    private readonly removePropertyService: RemovePropertyService,
+  ) {}
 
   @Post()
   async create(@Body() createPropertyDto: CreatePropertyDto) {
-    return this.propertyService.create(createPropertyDto);
+    return this.createPropertyService.create(createPropertyDto);
   }
 
   @Get()
   findAll() {
-    return this.propertyService.findAll();
+    return this.findAllPropertyService.findAll();
   }
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.propertyService.findOne(id);
+    return this.findOnePropertyService.findOne(id);
   }
 
   @Patch(':id')
@@ -37,11 +46,11 @@ export class PropertyController {
     @Body() updateDto: UpdatePropertyDto,
   ) {
 
-    return this.propertyService.update(id, updateDto);
+    return this.updatePropertyService.update(id, updateDto);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.propertyService.remove(id);
+    return this.removePropertyService.remove(id);
   }
 }

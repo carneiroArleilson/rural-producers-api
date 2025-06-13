@@ -1,5 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { CropService } from './crop.service';
+import { CropService } from './service/create-crop.service';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { Crop } from './entities/crop.entity';
 import { Property } from '../property/entities/property.entity';

@@ -12,10 +12,10 @@ Content-Type: application/json
 GET http://localhost:3000/producer
 
 ### Consultar produtor
-GET http://localhost:3000/producer/31a97570-a3e7-4ddb-8d26-0ec2954cd071
+GET http://localhost:3000/producer/b551a8a0-a800-413b-bb56-0c0fae24f60b
 
 ### Atualizar produtor
-PATCH http://localhost:3000/producer/5d04195c-6241-4a17-a555-8194af0b01bb
+PATCH http://localhost:3000/producer/b551a8a0-a800-413b-bb56-0c0fae24f60b
 Content-Type: application/json
 
 {
@@ -24,7 +24,7 @@ Content-Type: application/json
 }
 
 ### Remover produtor
-DELETE http://localhost:3000/producer/37efd8d9-9055-4fc9-a530-82c138b582a7
+DELETE http://localhost:3000/producer/b551a8a0-a800-413b-bb56-0c0fae24f60b
 
 
 ### PROPERTY
@@ -39,17 +39,17 @@ Content-Type: application/json
   "totalArea": 100,
   "agriculturalArea": 60,
   "vegetationArea": 40,
-  "producerId": "5d04195c-6241-4a17-a555-8194af0b01bb"
+  "producerId": "b551a8a0-a800-413b-bb56-0c0fae24f60b"
 }
 
 ### Listar todas as propriedades
 GET http://localhost:3000/property
 
 ### Consultar propriedade
-GET http://localhost:3000/property/d6e9c951-5047-4e66-b2f4-187996df2163
+GET http://localhost:3000/property/5a69a372-368f-4d9f-9316-72a21f56b37d
 
 ### Atualizar propriedade
-PATCH http://localhost:3000/property/d6e9c951-5047-4e66-b2f4-187996df2163
+PATCH http://localhost:3000/property/5a69a372-368f-4d9f-9316-72a21f56b37d
 Content-Type: application/json
 
 {
@@ -60,7 +60,7 @@ Content-Type: application/json
 }
 
 ### Remover propriedade
-DELETE http://localhost:3000/property/d6e9c951-5047-4e66-b2f4-187996df2163
+DELETE http://localhost:3000/property/5a69a372-368f-4d9f-9316-72a21f56b37d
 
 
 ### CROP
@@ -71,17 +71,17 @@ Content-Type: application/json
 {
   "name": "Soja",
   "season": "2024/2025",
-  "propertyId": "7dc52ca9-4466-4ee7-b041-62cb2211ab3b"
+  "propertyId": "5a69a372-368f-4d9f-9316-72a21f56b37d"
 }
 
 ### Listar todas as culturas
 GET http://localhost:3000/crops
 
 ### Consultar cultura por ID
-GET http://localhost:3000/crops/7ba4bbc8-614e-4bfe-91ee-e5cc1c01b2ec
+GET http://localhost:3000/crops/184316b6-2486-40e6-a1d3-a230c42e1e10
 
 ### Atualizar cultura
-PATCH http://localhost:3000/crops/7ba4bbc8-614e-4bfe-91ee-e5cc1c01b2ec
+PATCH http://localhost:3000/crops/184316b6-2486-40e6-a1d3-a230c42e1e10
 Content-Type: application/json
 
 {
@@ -90,4 +90,4 @@ Content-Type: application/json
 }
 
 ### Remover cultura
-DELETE http://localhost:3000/crops/7ba4bbc8-614e-4bfe-91ee-e5cc1c01b2ec
+DELETE http://localhost:3000/crops/184316b6-2486-40e6-a1d3-a230c42e1e10

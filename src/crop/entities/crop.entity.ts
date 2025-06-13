@@ -1,5 +1,5 @@
 import { Property } from 'src/property/entities/property.entity';
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn } from 'typeorm';
 
 @Entity()
 export class Crop {
@@ -13,6 +13,7 @@ export class Crop {
   season: string;
 
   @ManyToOne(() => Property, (property) => property.crops, { onDelete: 'CASCADE' })
+  @JoinColumn({ name: 'propertyId' })
   property: Property;
 
   @Column({nullable: false})
